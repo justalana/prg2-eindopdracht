@@ -4,11 +4,11 @@
 require_once 'includes/database.php';
 
 if(isset($_POST['submit'])) {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $genre = $_POST['genre'];
-    $pages = $_POST['pages'];
-    $year = $_POST['year'];
+    $title = mysqli_real_escape_string($db, $_POST['title']);
+    $author = mysqli_real_escape_string($db, $_POST['author']);
+    $genre = mysqli_real_escape_string($db, $_POST['genre']);
+    $pages = mysqli_real_escape_string($db, $_POST['pages']);
+    $year = mysqli_real_escape_string($db, $_POST['year']);
     if ($title == "") {
         $titleError = "Album cannot be empty";
     } if  ($author == "") {

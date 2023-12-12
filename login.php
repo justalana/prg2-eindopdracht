@@ -2,15 +2,20 @@
 // required when working with sessions
 session_start();
 
-$login = false;
+$_SESSION["loggedin"] = false;
 // Is user logged in?
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: index.php");
+    exit;
+}
 
 /** @var mysqli $db */
 require_once 'includes/database.php';
-
+$emailError = "";
+$passwordError = "";
+$details = [];
 
 if (isset($_POST['submit'])) {
-
 
     // Get form data
     $email = mysqli_real_escape_string($db, $_POST['email']);
@@ -21,38 +26,44 @@ if (isset($_POST['submit'])) {
         $emailError = "Field cannot be empty";
     } if ($password == "") {
         $passwordError = "Field cannot be empty";
-    } else {
+    }
+
+    if (empty($emailError) && empty($passwordError)) {
         // If data valid
         // SELECT the user from the database, based on the email address.
-        $query = "SELECT `email`, `password` 
-            FROM `users` WHERE email = '$email'";
+        $query = "SELECT `id`,`email`, `password` 
+            FROM users WHERE `email` = '$email'";
         $result = mysqli_query($db, $query)
         or die('Error '.mysqli_error($db).' with query '.$query);
 
-        $userInfo = mysqli_fetch_assoc($result);
 
-        $_SESSION['email'] = $userInfo['email'];
-        $_SESSION['password'] = $userInfo['password'];
         // check if the user exists
+        if ($result) {
+            $details = mysqli_fetch_assoc($result);
+            // Get user data from result
+            if (mysqli_num_rows($result) == 1) {
+                //Get password and check if it is correct
+                $hashed_password = $details['password'];
+                // Check if the provided password matches the stored password in the database
+                if (password_verify($password, $hashed_password)) {
 
-        // Get user data from result
-
-
-        // Check if the provided password matches the stored password in the database
-
-
-        // Store the user in the session
-
-
-        // Redirect to secure page
-        // Credentials not valid
-
-        //error incorrect log in
-
-        // User doesn't exist
-
-        //error incorrect log in
-
+                    // Store the user in the session
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['id'] = $details['id'];
+                    $_SESSION['email'] = $details['email'];
+                } else {
+                    // password doesnt match with email
+                    $errors['loginFailed'] = "Invalid password";
+                }
+                // Credentials not valid
+            } else {
+                //error incorrect log in
+                // User doesn't exist
+                $loginError = "Invalid username or password";
+            }
+        } else {
+            echo "Oops! Something went wrong, try again.";
+        }
     }
 
 
@@ -74,7 +85,7 @@ if (isset($_POST['submit'])) {
     <div class="container content">
         <h2 class="title">Log in</h2>
 
-        <?php if ($login) { ?>
+        <?php if ($_SESSION["loggedin"]) { ?>
             <p>Je bent ingelogd!</p>
             <p><a href="logout.php">Uitloggen</a> / <a href="secure.php">Naar secure page</a></p>
         <?php } else { ?>
@@ -92,9 +103,11 @@ if (isset($_POST['submit'])) {
                                 <input class="input" id="email" type="text" name="email" value="<?= $email ?? '' ?>" />
                                 <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <p class="help is-danger">
-                                <?= $emailError ?? '' ?>
-                            </p>
+                            <?php if(isset($loginError)) { ?>
+                                <p class="help is-danger">
+                                    <?= $loginError ?>
+                                </p>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -117,9 +130,11 @@ if (isset($_POST['submit'])) {
                                 <?php } ?>
 
                             </div>
-                            <p class="help is-danger">
-                                <?= $passwordError ?? '' ?>
-                            </p>
+                            <?php if(isset($loginError)) { ?>
+                                <p class="help is-danger">
+                                    <?= $loginError ?>
+                                </p>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

@@ -37,8 +37,6 @@ if(isset($_POST['submit'])) {
     } if ($year == "" || !is_numeric($_POST['year'] )) {
         $yearError = "Tracks cannot be empty";
     } else {
-
-
         $query = "UPDATE book 
                 SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;
@@ -48,7 +46,6 @@ if(isset($_POST['submit'])) {
         header(header: 'Location: index.php');
         exit;
     }
-
 }
 mysqli_close($db);
 ?>

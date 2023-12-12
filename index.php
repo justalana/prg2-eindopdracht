@@ -68,6 +68,9 @@ mysqli_close($db);
             </table>
         </div>
     </div>
+    <div>
+        <a class="button" href="login.php">Log out</a>
+    </div>
 </div>
 </body>
 </html>
