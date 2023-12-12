@@ -4,26 +4,26 @@
 require_once 'includes/database.php';
 
 if(isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $artist = $_POST['artist'];
+    $title = $_POST['title'];
+    $author = $_POST['author'];
     $genre = $_POST['genre'];
+    $pages = $_POST['pages'];
     $year = $_POST['year'];
-    $tracks = $_POST['tracks'];
-    if ($name == "") {
-        $nameError = "Album cannot be empty";
-    } if  ($artist == "") {
-        $artistError = "Artist cannot be empty";
+    if ($title == "") {
+        $titleError = "Album cannot be empty";
+    } if  ($author == "") {
+        $authorError = "Artist cannot be empty";
     } if ($genre == "") {
         $genreError = "Genre cannot be empty";
-    } if ($year == "" || !is_numeric($_POST['tracks'])) {
-        $yearError = "Must be a valid year";
-    } if ($tracks == "" || !is_numeric($_POST['tracks'] )) {
-        $trackError = "Tracks cannot be empty";
+    } if ($pages == "" || !is_numeric($_POST['pages'])) {
+        $pagesError = "Must be a valid year";
+    } if ($year == "" || !is_numeric($_POST['year'] )) {
+        $yearError = "Tracks cannot be empty";
     } else {
 
 
-        $query = "INSERT INTO `albums`(`name`, `artist`, `genre`, `year`, `tracks`) 
-                VALUES ('$name', '$artist', '$genre', $year, $tracks)";
+        $query = "INSERT INTO `book`(`title`, `author`, `genre`, `pages`, `year`) 
+                VALUES ('$title', '$author', '$genre', $pages, $year)";
 
         $result = mysqli_query($db, $query)
         or die('Error '.mysqli_error($db).' with query '.$query);
@@ -53,22 +53,22 @@ if(isset($_POST['submit'])) {
 
     <section class="columns is-centered">
         <div class="column is-10">
-            <h2 class="title mt-4">Create new album</h2>
+            <h2 class="title mt-4">Add new book</h2>
 
             <form class="column is-6" action="" method="post">
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Name</label>
+                        <label class="label" for="name">Title</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="name" type="text" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : ''; ?>"/>
+                                <input class="input" id="title" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>"/>
                             </div>
-                            <?php if(isset($nameError)) { ?>
+                            <?php if(isset($titleError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $nameError ?>
+                                    <?= $titleError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -77,16 +77,16 @@ if(isset($_POST['submit'])) {
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="artist">Artist</label>
+                        <label class="label" for="artist">Author</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="artist" type="text" name="artist" value="<?= isset($_POST['artist']) ? $_POST['artist'] : ''; ?>"/>
+                                <input class="input" id="author" type="text" name="author" value="<?= isset($_POST['author']) ? $_POST['author'] : ''; ?>"/>
                             </div>
-                            <?php if(isset($artistError)) { ?>
+                            <?php if(isset($authorError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $artistError ?>
+                                    <?= $authorError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -100,7 +100,15 @@ if(isset($_POST['submit'])) {
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="genre" type="text" name="genre" value="<?= isset($_POST['genre']) ? $_POST['genre'] : ''; ?>"/>
+                                <select class="input" name="genre">
+                                    <option value="<?php isset($_POST['genre']) ? $_POST['genre'] : ''; ?>"></option>
+                                    <option value="Romance">Romance</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="Young Adult">Young Adult</option>
+                                    <option value="LGBTQIA+">LGBTQIA</option>
+                                    <option value="Sciencefiction">Sciencefiction</option>
+                                    <option value="Thriller">Thriller</option>
+                                </select>
                             </div>
                             <?php if(isset($genreError)) { ?>
                                 <p class="help is-danger">
@@ -113,7 +121,25 @@ if(isset($_POST['submit'])) {
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="year">Year</label>
+                        <label class="label" for="year">Pages</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" id="pages" type="number" name="pages" value="<?= isset($_POST['pages']) ? $_POST['pages'] : ''; ?>"/>
+                            </div>
+                            <?php if(isset($pagesError)) { ?>
+                                <p class="help is-danger">
+                                    <?= $pagesError ?>
+                                </p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="tracks">Year</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
@@ -123,24 +149,6 @@ if(isset($_POST['submit'])) {
                             <?php if(isset($yearError)) { ?>
                                 <p class="help is-danger">
                                     <?= $yearError ?>
-                                </p>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label" for="tracks">Tracks</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input" id="tracks" type="number" name="tracks" value="<?= isset($_POST['tracks']) ? $_POST['tracks'] : ''; ?>"/>
-                            </div>
-                            <?php if(isset($trackError)) { ?>
-                                <p class="help is-danger">
-                                    <?= $trackError ?>
                                 </p>
                             <?php } ?>
                         </div>

@@ -4,15 +4,15 @@
 require_once 'includes/database.php';
 
 // Select all the albums from the database
-$query = "SELECT * FROM albums INNER JOIN artists ON albums.artist_id = artists.artist_id";
+$query = "SELECT * FROM book";
 $result = mysqli_query($db, $query)
 or die('Error '.mysqli_error($db).' with query '.$query);
 
 // Store the albums in an array
-$albums = [];
+$books = [];
 while($row = mysqli_fetch_assoc($result))
 {
-    $albums[] = $row;
+    $books[] = $row;
 }
 // Close the connection
 mysqli_close($db);
@@ -26,10 +26,10 @@ mysqli_close($db);
 </head>
 <body>
 <div class="container px-4">
-    <h1 class="title mt-4">Music Collection</h1>
+    <h1 class="title mt-4">Book Collection</h1>
     <hr>
     <div>
-        <a class="button" href="create.php">Create new album</a>
+        <a class="button" href="create.php">Add new book</a>
     </div>
     <div class="columns is-centered">
         <div class="column is-narrow">
@@ -38,11 +38,11 @@ mysqli_close($db);
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Artist</th>
-                    <th>Album</th>
+                    <th>Title</th>
+                    <th>Author</th>
                     <th>Genre</th>
+                    <th>Pages</th>
                     <th>Year</th>
-                    <th>Tracks</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -52,16 +52,16 @@ mysqli_close($db);
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php foreach ($albums as $index => $album) { ?>
+                <?php foreach ($books as $index => $book) { ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
-                        <td><?= $album['name'] ?></td>
-                        <td><?= $album['album_name'] ?></td>
-                        <td><?= $album['genre'] ?></td>
-                        <td><?= $album['year'] ?></td>
-                        <td><?= $album['tracks'] ?></td>
-                        <td><a href="details.php?id=<?= $album['id'] ?>">Details</a></td>
-                        <td><a href="edit.php?id=<?= $album['id'] ?>">Edit</a></td>
+                        <td><?= $book['title'] ?></td>
+                        <td><?= $book['author'] ?></td>
+                        <td><?= $book['genre'] ?></td>
+                        <td><?= $book['pages'] ?></td>
+                        <td><?= $book['year'] ?></td>
+                        <td><a href="details.php?id=<?= $book['id'] ?>">Details</a></td>
+                        <td><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></td>
                     </tr>
                 <?php } ?>
                 </tbody>

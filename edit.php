@@ -8,7 +8,7 @@ $id = $_GET['id'];
 /** @var mysqli $db */
 require_once 'includes/database.php';
 
-$query = 'SELECT * FROM albums INNER JOIN artists ON albums.artist_id = artists.artist_id WHERE id ='.$id;
+$query = 'SELECT * FROM book WHERE id ='.$id;
 $result = mysqli_query($db, $query)
 or die('Error '.mysqli_error($db).' with query '.$query);
 
@@ -17,33 +17,31 @@ if(mysqli_num_rows($result) != 1) {
     exit;
 }
 
-$album = mysqli_fetch_assoc($result);
+$book = mysqli_fetch_assoc($result);
 //Error bericht aanpassen zodat die in html staat ipv de php
 //variabelen apart aanpassen ipv in 1 statement
 if(isset($_POST['submit'])) {
-    $name = mysqli_real_escape_string($db, $_POST['name']);
-    $artist = mysqli_real_escape_string($db, $_POST['artist']);
+    $title = mysqli_real_escape_string($db, $_POST['title']);
+    $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
+    $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
-    $tracks = mysqli_real_escape_string($db, $_POST['tracks']);
-    if ($name == "") {
-        $nameError = "Album cannot be empty";
-    } if  ($artist == "") {
-        $artistError = "Artist cannot be empty";
+    if ($title == "") {
+        $titleError = "Album cannot be empty";
+    } if  ($author == "") {
+        $authorError = "Artist cannot be empty";
     } if ($genre == "") {
         $genreError = "Genre cannot be empty";
-    } if ($year == "" || !is_numeric($_POST['tracks'])) {
-        $yearError = "Must be a valid year";
-    } if ($tracks == "" || !is_numeric($_POST['tracks'] )) {
-        $trackError = "Tracks cannot be empty";
+    } if ($pages == "" || !is_numeric($_POST['pages'])) {
+        $pagesError = "Must be a valid year";
+    } if ($year == "" || !is_numeric($_POST['year'] )) {
+        $yearError = "Tracks cannot be empty";
     } else {
 
 
-        $query = "UPDATE albums 
-                SET `name`='$name',`artist`='$artist',`genre`='$genre',`year`=$year,`tracks`=$tracks   
+        $query = "UPDATE book 
+                SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;
-        echo $query;
-        exit;
         $result = mysqli_query($db, $query)
         or die('Error '.mysqli_error($db).' with query '.$query);
 
@@ -66,7 +64,7 @@ mysqli_close($db);
 
     <section class="columns is-centered">
         <div class="column is-10">
-            <h2 class="title mt-4">Edit <?= $album['name']?></h2>
+            <h2 class="title mt-4">Edit <?= $book['title']?></h2>
 
             <form class="column is-6" action="" method="post">
 
@@ -77,11 +75,11 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="name" type="text" name="name" value="<?= $album['album_name']?>"/>
+                                <input class="input" id="title" type="text" name="title" value="<?= $book['title']?>"/>
                             </div>
-                            <?php if(isset($nameError)) { ?>
+                            <?php if(isset($titleError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $nameError ?>
+                                    <?= $titleError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -95,11 +93,11 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="artist" type="text" name="artist" value="<?= $album['name']?>"/>
+                                <input class="input" id="author" type="text" name="author" value="<?= $book['author']?>"/>
                             </div>
-                            <?php if(isset($artistError)) { ?>
+                            <?php if(isset($authorError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $artistError ?>
+                                    <?= $authorError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -113,7 +111,15 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="genre" type="text" name="genre" value="<?= $album['genre']?>"/>
+                                <select class="input" name="genre">
+                                    <option value="<?php isset($_POST['genre']) ? $_POST['genre'] : ''; ?>"></option>
+                                    <option value="Romance">Romance</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="Young Adult">Young Adult</option>
+                                    <option value="LGBTQIA+">LGBTQIA</option>
+                                    <option value="Sciencefiction">Sciencefiction</option>
+                                    <option value="Thriller">Thriller</option>
+                                </select>
                             </div>
                             <?php if(isset($genreError)) { ?>
                                 <p class="help is-danger">
@@ -131,11 +137,11 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="year" type="number" name="year" value="<?= $album['year']?>"/>
+                                <input class="input" id="pages" type="number" name="pages" value="<?= $book['pages']?>"/>
                             </div>
-                            <?php if(isset($yearError)) { ?>
+                            <?php if(isset($pagesError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $yearError ?>
+                                    <?= $pagesError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -149,11 +155,11 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="tracks" type="number" name="tracks" value="<?= $album['tracks']?>"/>
+                                <input class="input" id="year" type="number" name="year" value="<?= $book['year']?>"/>
                             </div>
-                            <?php if(isset($trackError)) { ?>
+                            <?php if(isset($yearError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $trackError ?>
+                                    <?= $yearError ?>
                                 </p>
                             <?php } ?>
                         </div>
