@@ -32,17 +32,19 @@ $book = mysqli_fetch_assoc($result);
 //check if form is submitted
 if(isset($_POST['submit'])) {
 
-//if form is submitted get the variables from the post
+    //if form is submitted get the variables from the post
     $title = mysqli_real_escape_string($db, $_POST['title']);
     $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
     $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
-//check if the form was filled in correctly
-// if not show an error
+
+    //check if the form was filled in correctly
+    // if not show an error
     require_once 'includes/form-validation.php';
     /** @var mysqli $form_filled */
- if ($form_filled) {
+
+    if ($form_filled) {
         $query = "UPDATE book 
                 SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;

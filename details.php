@@ -7,6 +7,7 @@ if (!isset($_GET['id']) || $_GET['id'] == '') {
 }
 //save id in variable
 $id = $_GET['id'];
+
 //connection to database
 /** @var mysqli $db */
 require_once 'includes/database.php';

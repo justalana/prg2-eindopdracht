@@ -9,14 +9,15 @@ require_once 'includes/database.php';
 //check if form is submitted
 if(isset($_POST['submit'])) {
 
-//if form is submitted get the variables from the post
+    //if form is submitted get the variables from the post
     $title = mysqli_real_escape_string($db, $_POST['title']);
     $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
     $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
-//check if the form was filled in correctly
-// if not show an error
+
+    //check if the form was filled in correctly
+    // if not show an error
     require_once 'includes/form-validation.php';
     /** @var mysqli $form_filled */
 
@@ -64,9 +65,9 @@ mysqli_close($db);
                                 <input class="input" id="title" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>"/>
                             </div>
 <!--                            if input is not filled, give error-->
-                            <?php if(isset($errors['title'])) { ?>
+                            <?php if(isset($titleError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $errors['title'] ?>
+                                    <?= $titleError ?>
                                 </p>
                             <?php } ?>
                         </div>
