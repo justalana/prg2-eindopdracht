@@ -1,17 +1,17 @@
 <?php
 $form_filled = false;
-
+$errors = [];
     //Check if data is valid & generate error if not so
-    if ($title == "") {
-        $titleError = "Title cannot be empty";
-    } if ($author == "") {
-        $authorError = "Author cannot be empty";
-    } if ($genre == "") {
-        $genreError = "Genre cannot be empty";
-    } if ($pages == "" || !is_numeric($pages)) {
-        $pagesError = "Must be a valid number";
-    } if ($year == "" || !is_numeric($year)) {
-        $yearErrors = "Must be a valid number";
+    if (empty($title)) {
+        $errors['title'] = "Title cannot be empty";
+    } if (empty($author)) {
+        $errors['author'] = "Author cannot be empty";
+    } if (empty($genre)) {
+        $errors['genre'] = "Genre cannot be empty";
+    } if (empty($pages)) {
+        $errors['pages'] = "Pages cannot be empty";
+    } if (empty($year)) {
+        $errors['year'] = "Year cannot be empty";
     } else {
         $form_filled = true;
         return;

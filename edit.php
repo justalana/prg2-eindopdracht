@@ -26,9 +26,6 @@ if(mysqli_num_rows($result) != 1) {
 }
 $book = mysqli_fetch_assoc($result);
 
-
-//Error bericht aanpassen zodat die in html staat ipv de php
-//variabelen apart aanpassen ipv in 1 statement
 //check if form is submitted
 if(isset($_POST['submit'])) {
 
@@ -45,12 +42,14 @@ if(isset($_POST['submit'])) {
     /** @var mysqli $form_filled */
 
     if ($form_filled) {
+        //if form is filled correctly send info to database with query
         $query = "UPDATE book 
                 SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;
         $result = mysqli_query($db, $query)
-        or die('Error '.mysqli_error($db).' with query '.$query);
+        or die('Error ' . mysqli_error($db) . ' with query ' . $query);
 
+        //send user back to index when done
         header(header: 'Location: index.php');
         exit;
     }
@@ -75,34 +74,36 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Name</label>
+                        <label class="label" for="title">Title</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
+                            <?php if(isset($errors['title'])) { ?>
                             <div class="control">
-                                <input class="input" id="title" type="text" name="title" value="<?= $book['title']?>"/>
+                                <input class="input" id="title" type="text" name="title" value="<?= $book['title'] ?>"/>
                             </div>
-                            <?php if(isset($titleError)) { ?>
-                                <p class="help is-danger">
-                                    <?= $titleError ?>
-                                </p>
+                            <?php } else {?>
+                            <div class="control">
+                                <input class="input" id="title" type="text" name="title" placeholder="<?= $book['title']?>" value="<?= isset($title) ? $title : ''; ?>"/>
+                            </div>
                             <?php } ?>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Artist</label>
+                        <label class="label" for="author">Author</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
                                 <input class="input" id="author" type="text" name="author" value="<?= $book['author']?>"/>
                             </div>
-                            <?php if(isset($authorError)) { ?>
+                            <?php if(isset($errors['author'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $authorError ?>
+                                    <?= $errors['author'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -111,7 +112,7 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Genre</label>
+                        <label class="label" for="genre">Genre</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
@@ -128,9 +129,9 @@ mysqli_close($db);
                                     <option value="Greek Mythology">Greek Mythology</option>
                                 </select>
                             </div>
-                            <?php if(isset($genreError)) { ?>
+                            <?php if(isset($errors['genre'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $genreError ?>
+                                    <?= $errors['genre'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -139,16 +140,16 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Year</label>
+                        <label class="label" for="pages">Pages</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
                                 <input class="input" id="pages" type="number" name="pages" value="<?= $book['pages']?>"/>
                             </div>
-                            <?php if(isset($pagesError)) { ?>
+                            <?php if(isset($errors['pages'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $pagesError ?>
+                                    <?= $errors['pages'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -157,16 +158,16 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Tracks</label>
+                        <label class="label" for="year">Year</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
                                 <input class="input" id="year" type="number" name="year" value="<?= $book['year']?>"/>
                             </div>
-                            <?php if(isset($yearError)) { ?>
+                            <?php if(isset($errors['year'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $yearError ?>
+                                    <?= $errors['year'] ?>
                                 </p>
                             <?php } ?>
                         </div>

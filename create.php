@@ -56,18 +56,18 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="name">Title</label>
+                        <label class="label" for="title">Title</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
 <!--                                set value to value given with post-->
-                                <input class="input" id="title" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>"/>
+                                <input class="input" id="title" type="text" name="title" value="<?= isset($title) ? $title : ''; ?>"/>
                             </div>
 <!--                            if input is not filled, give error-->
-                            <?php if(isset($titleError)) { ?>
+                            <?php if(isset($errors['title'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $titleError ?>
+                                    <?= $errors['title'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -76,16 +76,16 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="artist">Author</label>
+                        <label class="label" for="author">Author</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="author" type="text" name="author" value="<?= isset($_POST['author']) ? $_POST['author'] : ''; ?>"/>
+                                <input class="input" id="author" type="text" name="author" value="<?= isset($author) ? $author : ''; ?>"/>
                             </div>
-                            <?php if(isset($authorError)) { ?>
+                            <?php if(isset($errors['author'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $authorError ?>
+                                    <?= $errors['author'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -111,9 +111,9 @@ mysqli_close($db);
                                     <option value="Greek Mythology">Greek Mythology</option>
                                 </select>
                             </div>
-                            <?php if(isset($genreError)) { ?>
+                            <?php if(isset($errors['genre'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $genreError ?>
+                                    <?= $errors['genre'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -122,16 +122,16 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="year">Pages</label>
+                        <label class="label" for="pages">Pages</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="pages" type="number" name="pages" value="<?= isset($_POST['pages']) ? $_POST['pages'] : ''; ?>"/>
+                                <input class="input" id="pages" type="number" name="pages" value="<?= isset($pages) ? $pages : ''; ?>"/>
                             </div>
-                            <?php if(isset($pagesError)) { ?>
+                            <?php if(isset($errors['pages'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $pagesError ?>
+                                    <?= $errors['pages'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -140,16 +140,16 @@ mysqli_close($db);
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="tracks">Year</label>
+                        <label class="label" for="year">Year</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="year" type="number" name="year" value="<?= isset($_POST['year']) ? $_POST['year'] : ''; ?>"/>
+                                <input class="input" id="year" type="number" name="year" value="<?= isset($year) ? $year : ''; ?>"/>
                             </div>
-                            <?php if(isset($yearError)) { ?>
+                            <?php if(isset($errors['year'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $yearError ?>
+                                    <?= $errors['year'] ?>
                                 </p>
                             <?php } ?>
                         </div>

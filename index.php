@@ -52,7 +52,9 @@ mysqli_close($db);
                     <th>Genre</th>
                     <th>Pages</th>
                     <th>Year</th>
-                    <th></th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tfoot>
