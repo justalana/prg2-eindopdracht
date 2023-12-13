@@ -1,4 +1,18 @@
 <?php
+
+session_start();
+
+//May I visit this page? Check the SESSION
+if ($_SESSION["loggedin"]) {
+    //Get name from the SESSION
+    $name = $_SESSION['name'];
+} else {
+    // Redirect if not logged in
+    header("location: login.php");
+    echo "Please login before entering this page!";
+    exit;
+}
+
 /** @var mysqli $db */
 // Setup connection with database
 require_once 'includes/database.php';
@@ -28,6 +42,9 @@ mysqli_close($db);
 <div class="container px-4">
     <h1 class="title mt-4">Book Collection</h1>
     <hr>
+    <div>
+        <a class="button" href="create.php">Add new book</a>
+    </div>
     <div class="columns is-centered">
         <div class="column is-narrow">
 
@@ -58,6 +75,7 @@ mysqli_close($db);
                         <td><?= $book['pages'] ?></td>
                         <td><?= $book['year'] ?></td>
                         <td><a href="details.php?id=<?= $book['id'] ?>">Details</a></td>
+                        <td><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -65,7 +83,7 @@ mysqli_close($db);
         </div>
     </div>
     <div>
-        <a class="button" href="login.php">Login to edit this table</a>
+        <a class="button" href="login.php">Log out</a>
     </div>
 </div>
 </body>

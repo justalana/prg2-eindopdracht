@@ -2,10 +2,10 @@
 // required when working with sessions
 session_start();
 
-$_SESSION["loggedin"] = false;
+$_SESSION['loggedin'] = false;
 // Is user logged in?
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
+if($_SESSION['loggedin']){
+    header("location: login.php");
     exit;
 }
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
     if (empty($emailError) && empty($passwordError)) {
         // If data valid
         // SELECT the user from the database, based on the email address.
-        $query = "SELECT `id`,`email`, `password` 
+        $query = "SELECT `id`,`email`, `password` , `first_name`
             FROM users WHERE `email` = '$email'";
         $result = mysqli_query($db, $query)
         or die('Error '.mysqli_error($db).' with query '.$query);
@@ -51,6 +51,11 @@ if (isset($_POST['submit'])) {
                     $_SESSION['loggedin'] = true;
                     $_SESSION['id'] = $details['id'];
                     $_SESSION['email'] = $details['email'];
+                    $_SESSION['name'] = $details['first_name'];
+
+                    header("location: login-index.php");
+                    exit;
+
                 } else {
                     // password doesnt match with email
                     $errors['loginFailed'] = "Invalid password";
@@ -85,10 +90,7 @@ if (isset($_POST['submit'])) {
     <div class="container content">
         <h2 class="title">Log in</h2>
 
-        <?php if ($_SESSION["loggedin"]) { ?>
-            <p>Je bent ingelogd!</p>
-            <p><a href="logout.php">Uitloggen</a> / <a href="secure.php">Naar secure page</a></p>
-        <?php } else { ?>
+        <?php if (!$_SESSION['loggedin']) { ?>
 
         <section class="columns">
             <form class="column is-6" action="" method="post">
@@ -148,8 +150,21 @@ if (isset($_POST['submit'])) {
 
             </form>
         </section>
+        <?php if (!$_SESSION['loggedin']) { ?>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal"></div>
+                <div class="field-body">
+                    <a href="register.php">
+                        <button class="button is-link is-fullwidth" type="submit" name="register">Don't have an account? Register now</button>
+                    </a>
+                </div>
+            </div>
+        <?php } ?>
 
         <?php } ?>
+
+
+
 
     </div>
 </section>

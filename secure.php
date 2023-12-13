@@ -1,13 +1,6 @@
 <?php
-session_start();
-
-//May I visit this page? Check the SESSION
-
-    // Redirect if not logged in
 
 
-
-//Get name from the SESSION
 
 ?>
 <!doctype html>
@@ -32,7 +25,7 @@ session_start();
                 <img class="column image is-one-fifth" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1dbc1935-6542-4ee3-822f-135cff4ba62c/df8bak7-1db31a67-3431-410f-a531-3da321cbd0fb.png/v1/fill/w_1024,h_1731,strp/gandalf_the_grey__the_hobbit____transparent__by_speedcam_df8bak7-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTczMSIsInBhdGgiOiJcL2ZcLzFkYmMxOTM1LTY1NDItNGVlMy04MjJmLTEzNWNmZjRiYTYyY1wvZGY4YmFrNy0xZGIzMWE2Ny0zNDMxLTQxMGYtYTUzMS0zZGEzMjFjYmQwZmIucG5nIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.ZJjn7_YG0nKL-NvMFNoKmoVelhqE1YmMWBpSRTCj5Tg" alt=""/>
                 <div class="column">
                     <h2 class="title">
-                        Welcome, [NAME]
+                        Welcome, <?= $name ?>
                     </h2>
                     <p>
                         This is a secure page. You have to log in to see this page.
