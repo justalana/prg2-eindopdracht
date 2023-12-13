@@ -53,7 +53,8 @@ if (isset($_POST['submit'])) {
                     $_SESSION['email'] = $details['email'];
                     $_SESSION['name'] = $details['first_name'];
 
-                    header("location: login-index.php");
+                    //send user to index page
+                    header("location: index.php");
                     exit;
 
                 } else {

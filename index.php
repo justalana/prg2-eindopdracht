@@ -1,8 +1,10 @@
 <?php
+$loggedin = false;
+session_start();
+$loggedin = $_SESSION['loggedin'];
 /** @var mysqli $db */
 // Setup connection with database
 require_once 'includes/database.php';
-
 // Select all the albums from the database
 $query = "SELECT * FROM book";
 $result = mysqli_query($db, $query)
@@ -28,6 +30,11 @@ mysqli_close($db);
 <div class="container px-4">
     <h1 class="title mt-4">Book Collection</h1>
     <hr>
+    <?php if ($loggedin) { ?>
+    <div>
+        <a class="button" href="create.php">Add new book</a>
+    </div>
+    <?php } ?>
     <div class="columns is-centered">
         <div class="column is-narrow">
 
@@ -58,15 +65,24 @@ mysqli_close($db);
                         <td><?= $book['pages'] ?></td>
                         <td><?= $book['year'] ?></td>
                         <td><a href="details.php?id=<?= $book['id'] ?>">Details</a></td>
+                        <?php if ($loggedin) { ?>
+                        <td><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
                 </tbody>
             </table>
         </div>
     </div>
+    <?php if ($loggedin) { ?>
+    <div>
+        <a class="button" href="login.php">Logout</a>
+    </div>
+    <?php } else { ?>
     <div>
         <a class="button" href="login.php">Login to edit this table</a>
     </div>
+    <?php } ?>
 </div>
 </body>
 </html>
