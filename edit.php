@@ -1,4 +1,7 @@
 <?php
+//check if user is logged in
+require_once 'secure.php';
+
 //Check if ID is valid
 if (!isset($_GET['id']) || $_GET['id'] == '') {
     header(header: 'Location: index.php');
@@ -109,13 +112,15 @@ mysqli_close($db);
                         <div class="field">
                             <div class="control">
                                 <select class="input" name="genre">
-                                    <option value="<?php isset($_POST['genre']) ? $_POST['genre'] : ''; ?>"></option>
+                                    <option value="<?= $book['genre']?>"><?= $book['genre']?></option>
                                     <option value="Romance">Romance</option>
                                     <option value="Fantasy">Fantasy</option>
                                     <option value="Young Adult">Young Adult</option>
-                                    <option value="LGBTQIA+">LGBTQIA</option>
-                                    <option value="Sciencefiction">Sciencefiction</option>
-                                    <option value="Thriller">Thriller</option>
+                                    <option value="LGBTQIA+">LGBTQIA+</option>
+                                    <option value="Science-Fiction">Science-Fiction</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="Non-Fiction">Non-Fiction</option>
+                                    <option value="Greek Mythology">Greek Mythology</option>
                                 </select>
                             </div>
                             <?php if(isset($genreError)) { ?>

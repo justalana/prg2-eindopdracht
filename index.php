@@ -1,10 +1,13 @@
 <?php
+//check if user is logged in
 $loggedin = false;
 session_start();
 $loggedin = $_SESSION['loggedin'];
-/** @var mysqli $db */
+
 // Setup connection with database
+/** @var mysqli $db */
 require_once 'includes/database.php';
+
 // Select all the albums from the database
 $query = "SELECT * FROM book";
 $result = mysqli_query($db, $query)

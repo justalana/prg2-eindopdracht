@@ -1,4 +1,6 @@
 <?php
+//check if user is logged in
+require_once 'secure.php';
 
 /** @var mysqli $db */
 require_once 'includes/database.php';
