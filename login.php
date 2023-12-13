@@ -106,9 +106,9 @@ if (isset($_POST['submit'])) {
                                 <input class="input" id="email" type="text" name="email" value="<?= $email ?? '' ?>" />
                                 <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <?php if(isset($loginError)) { ?>
+                            <?php if(isset($emailError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $loginError ?>
+                                    <?= $emailError ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -133,9 +133,9 @@ if (isset($_POST['submit'])) {
                                 <?php } ?>
 
                             </div>
-                            <?php if(isset($loginError)) { ?>
+                            <?php if(isset($passwordError)) { ?>
                                 <p class="help is-danger">
-                                    <?= $loginError ?>
+                                    <?= $passwordError ?>
                                 </p>
                             <?php } ?>
                         </div>
