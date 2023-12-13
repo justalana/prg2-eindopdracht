@@ -1,6 +1,7 @@
 <?php
 //check if user is logged in
-require_once 'secure.php';
+//if user tries to enter this page while not logged in it sends them back to index
+require_once 'includes/secure.php';
 
 //Check if ID is valid
 if (!isset($_GET['id']) || $_GET['id'] == '') {
@@ -8,38 +9,40 @@ if (!isset($_GET['id']) || $_GET['id'] == '') {
     exit;
 }
 $id = $_GET['id'];
+
+//connection to database
 /** @var mysqli $db */
 require_once 'includes/database.php';
 
+//get book from databse using query
 $query = 'SELECT * FROM book WHERE id ='.$id;
 $result = mysqli_query($db, $query)
 or die('Error '.mysqli_error($db).' with query '.$query);
 
+//check if book exists in database
 if(mysqli_num_rows($result) != 1) {
     header(header: 'Location: index.php');
     exit;
 }
-
 $book = mysqli_fetch_assoc($result);
+
+
 //Error bericht aanpassen zodat die in html staat ipv de php
 //variabelen apart aanpassen ipv in 1 statement
+//check if form is submitted
 if(isset($_POST['submit'])) {
+
+//if form is submitted get the variables from the post
     $title = mysqli_real_escape_string($db, $_POST['title']);
     $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
     $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
-    if ($title == "") {
-        $titleError = "Album cannot be empty";
-    } if  ($author == "") {
-        $authorError = "Artist cannot be empty";
-    } if ($genre == "") {
-        $genreError = "Genre cannot be empty";
-    } if ($pages == "" || !is_numeric($_POST['pages'])) {
-        $pagesError = "Must be a valid year";
-    } if ($year == "" || !is_numeric($_POST['year'] )) {
-        $yearError = "Tracks cannot be empty";
-    } else {
+//check if the form was filled in correctly
+// if not show an error
+    require_once 'includes/form-validation.php';
+    /** @var mysqli $form_filled */
+ if ($form_filled) {
         $query = "UPDATE book 
                 SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;

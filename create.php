@@ -1,44 +1,38 @@
 <?php
 //check if user is logged in
-require_once 'secure.php';
+//if user tries to enter this page while not logged in it sends them back to index
+require_once 'includes/secure.php';
 
+//connection to database
 /** @var mysqli $db */
 require_once 'includes/database.php';
-
+//check if form is submitted
 if(isset($_POST['submit'])) {
+
+//if form is submitted get the variables from the post
     $title = mysqli_real_escape_string($db, $_POST['title']);
     $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
     $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
-    if ($title == "") {
-        $titleError = "Album cannot be empty";
-    } if  ($author == "") {
-        $authorError = "Artist cannot be empty";
-    } if ($genre == "") {
-        $genreError = "Genre cannot be empty";
-    } if ($pages == "" || !is_numeric($_POST['pages'])) {
-        $pagesError = "Must be a valid year";
-    } if ($year == "" || !is_numeric($_POST['year'] )) {
-        $yearError = "Tracks cannot be empty";
-    } else {
+//check if the form was filled in correctly
+// if not show an error
+    require_once 'includes/form-validation.php';
+    /** @var mysqli $form_filled */
 
-
+    if ($form_filled) {
+        //if form is filled correctly send info to database with query
         $query = "INSERT INTO `book`(`title`, `author`, `genre`, `pages`, `year`) 
-                VALUES ('$title', '$author', '$genre', $pages, $year)";
-
+            VALUES ('$title', '$author', '$genre', $pages, $year)";
         $result = mysqli_query($db, $query)
-        or die('Error '.mysqli_error($db).' with query '.$query);
+        or die('Error ' . mysqli_error($db) . ' with query ' . $query);
 
+        //send user back to index when done
         header(header: 'Location: index.php');
         exit;
     }
-
-
-
-    mysqli_close($db);
-
 }
+mysqli_close($db);
 ?>
 <!doctype html>
 <html lang="en">
@@ -66,11 +60,13 @@ if(isset($_POST['submit'])) {
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
+<!--                                set value to value given with post-->
                                 <input class="input" id="title" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>"/>
                             </div>
-                            <?php if(isset($titleError)) { ?>
+<!--                            if input is not filled, give error-->
+                            <?php if(isset($errors['title'])) { ?>
                                 <p class="help is-danger">
-                                    <?= $titleError ?>
+                                    <?= $errors['title'] ?>
                                 </p>
                             <?php } ?>
                         </div>
@@ -103,13 +99,15 @@ if(isset($_POST['submit'])) {
                         <div class="field">
                             <div class="control">
                                 <select class="input" name="genre">
-                                    <option value="<?php isset($_POST['genre']) ? $_POST['genre'] : ''; ?>"></option>
+                                    <option value=""></option>
                                     <option value="Romance">Romance</option>
                                     <option value="Fantasy">Fantasy</option>
                                     <option value="Young Adult">Young Adult</option>
-                                    <option value="LGBTQIA+">LGBTQIA</option>
-                                    <option value="Sciencefiction">Sciencefiction</option>
-                                    <option value="Thriller">Thriller</option>
+                                    <option value="LGBTQIA+">LGBTQIA+</option>
+                                    <option value="Science-Fiction">Science-Fiction</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="Non-Fiction">Non-Fiction</option>
+                                    <option value="Greek Mythology">Greek Mythology</option>
                                 </select>
                             </div>
                             <?php if(isset($genreError)) { ?>

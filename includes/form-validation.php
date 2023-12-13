@@ -1,27 +1,20 @@
 <?php
-//Check if data is valid & generate error if not so
-$submit = false;
-if(isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $artist = $_POST['artist'];
-    $genre = $_POST['genre'];
-    $year = $_POST['year'];
-    $tracks = $_POST['tracks'];
-    if ($name == "") {
-        $nameError = "Album cannot be empty";
-    }
-    if ($artist == "") {
-        $artistError = "Artist cannot be empty";
-    }
-    if ($genre == "") {
+$form_filled = false;
+$errors = [];
+
+    //Check if data is valid & generate error if not so
+    if ($title == "") {
+        $errors['title'] = "Album cannot be empty";
+    } if ($author == "") {
+        $authorError = "Artist cannot be empty";
+    } if ($genre == "") {
         $genreError = "Genre cannot be empty";
-    }
-    if ($year == "" || !is_numeric($_POST['tracks'])) {
-        $yearError = "Must be a valid year";
-    }
-    if ($tracks == "" || !is_numeric($_POST['tracks'])) {
-        $trackError = "Tracks cannot be empty";
+    } if ($pages == "" || !is_numeric($_POST['pages'])) {
+        $pagesError = "Must be a valid year";
+    } if ($year == "" || !is_numeric($_POST['year'])) {
+        $yearError = "Tracks cannot be empty";
     } else {
-        $submit = true;
+        $form_filled = true;
+        return;
     }
-}
+

@@ -19,6 +19,7 @@ while($row = mysqli_fetch_assoc($result))
 {
     $books[] = $row;
 }
+
 // Close the connection
 mysqli_close($db);
 ?>
@@ -33,6 +34,7 @@ mysqli_close($db);
 <div class="container px-4">
     <h1 class="title mt-4">Book Collection</h1>
     <hr>
+<!--    only show this button if user is logged in-->
     <?php if ($loggedin) { ?>
     <div>
         <a class="button" href="create.php">Add new book</a>
@@ -68,8 +70,10 @@ mysqli_close($db);
                         <td><?= $book['pages'] ?></td>
                         <td><?= $book['year'] ?></td>
                         <td><a href="details.php?id=<?= $book['id'] ?>">Details</a></td>
+                        <!--    only show these links if user is logged in-->
                         <?php if ($loggedin) { ?>
-                        <td><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></td>
+                            <td><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></td>
+                            <td><a href="delete.php?id=<?= $book['id'] ?>">Delete</a></td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
@@ -77,11 +81,13 @@ mysqli_close($db);
             </table>
         </div>
     </div>
+<!--    show logout button is user is logged in-->
     <?php if ($loggedin) { ?>
     <div>
         <a class="button" href="login.php">Logout</a>
     </div>
     <?php } else { ?>
+<!--    show login button if user is not logged in-->
     <div>
         <a class="button" href="login.php">Login to edit this table</a>
     </div>
