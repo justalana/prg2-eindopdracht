@@ -26,6 +26,7 @@ if(mysqli_num_rows($result) != 1) {
 }
 $book = mysqli_fetch_assoc($result);
 
+
 //check if form is submitted
 if(isset($_POST['submit'])) {
 
@@ -37,8 +38,9 @@ if(isset($_POST['submit'])) {
     $year = mysqli_real_escape_string($db, $_POST['year']);
 
     //check if the form was filled in correctly
-    // if not show an error
-    require_once 'includes/form-validation.php';
+    // if values are empty fill in the old value
+    // this way there will be no empty fields submitted
+    require_once 'includes/edit-validation.php';
     /** @var mysqli $form_filled */
 
     if ($form_filled) {
@@ -78,15 +80,9 @@ mysqli_close($db);
                     </div>
                     <div class="field-body">
                         <div class="field">
-                            <?php if(isset($errors['title'])) { ?>
                             <div class="control">
-                                <input class="input" id="title" type="text" name="title" value="<?= $book['title'] ?>"/>
+                                <input class="input" id="title" type="text" name="title" placeholder="<?=$book['title'] ?>" value=""/>
                             </div>
-                            <?php } else {?>
-                            <div class="control">
-                                <input class="input" id="title" type="text" name="title" placeholder="<?= $book['title']?>" value="<?= isset($title) ? $title : ''; ?>"/>
-                            </div>
-                            <?php } ?>
 
                         </div>
                     </div>
@@ -99,7 +95,7 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="author" type="text" name="author" value="<?= $book['author']?>"/>
+                                <input class="input" id="author" type="text" name="author" placeholder="<?= $book['author']?>" value=""/>
                             </div>
                             <?php if(isset($errors['author'])) { ?>
                                 <p class="help is-danger">
@@ -118,7 +114,7 @@ mysqli_close($db);
                         <div class="field">
                             <div class="control">
                                 <select class="input" name="genre">
-                                    <option value="<?= $book['genre']?>"><?= $book['genre']?></option>
+                                    <option value="" disabled selected hidden><?= $book['genre']?></option>
                                     <option value="Romance">Romance</option>
                                     <option value="Fantasy">Fantasy</option>
                                     <option value="Young Adult">Young Adult</option>
@@ -145,7 +141,7 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="pages" type="number" name="pages" value="<?= $book['pages']?>"/>
+                                <input class="input" id="pages" type="number" name="pages" placeholder="<?= $book['pages']?>" value=""/>
                             </div>
                             <?php if(isset($errors['pages'])) { ?>
                                 <p class="help is-danger">
@@ -163,7 +159,7 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" id="year" type="number" name="year" value="<?= $book['year']?>"/>
+                                <input class="input" id="year" type="number" name="year" placeholder="<?= $book['year']?>" value=""/>
                             </div>
                             <?php if(isset($errors['year'])) { ?>
                                 <p class="help is-danger">

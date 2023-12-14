@@ -1,4 +1,5 @@
 <?php
+
 $form_filled = false;
 $errors = [];
     //Check if data is valid & generate error if not so

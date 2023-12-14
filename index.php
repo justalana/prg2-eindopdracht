@@ -1,6 +1,5 @@
 <?php
 //check if user is logged in
-$loggedin = false;
 session_start();
 $loggedin = $_SESSION['loggedin'];
 
@@ -53,8 +52,10 @@ mysqli_close($db);
                     <th>Pages</th>
                     <th>Year</th>
                     <th>Details</th>
+                    <?php if ($loggedin) { ?>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <?php } ?>
                 </tr>
                 </thead>
                 <tfoot>

@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
 
     //check if the form was filled in correctly
     // if not show an error
-    require_once 'includes/form-validation.php';
+    require_once 'includes/create-validation.php';
     /** @var mysqli $form_filled */
 
     if ($form_filled) {
