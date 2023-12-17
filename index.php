@@ -1,5 +1,6 @@
 <?php
 //check if user is logged in
+$_SESSION['loggedin'] = false;
 session_start();
 $loggedin = $_SESSION['loggedin'];
 
@@ -67,11 +68,11 @@ mysqli_close($db);
                 <?php foreach ($books as $index => $book) { ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
-                        <td><?= $book['title'] ?></td>
-                        <td><?= $book['author'] ?></td>
-                        <td><?= $book['genre'] ?></td>
-                        <td><?= $book['pages'] ?></td>
-                        <td><?= $book['year'] ?></td>
+                        <td><?= htmlentities($book['title'])  ?></td>
+                        <td><?= htmlentities($book['author']) ?></td>
+                        <td><?= htmlentities($book['genre']) ?></td>
+                        <td><?= htmlentities($book['pages']) ?></td>
+                        <td><?= htmlentities($book['year']) ?></td>
                         <td><a href="details.php?id=<?= $book['id'] ?>">Details</a></td>
                         <!--    only show these links if user is logged in-->
                         <?php if ($loggedin) { ?>

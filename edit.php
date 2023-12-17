@@ -81,6 +81,7 @@ mysqli_close($db);
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
+<!--                                fill in placeholder so user can see old info-->
                                 <input class="input" id="title" type="text" name="title" placeholder="<?=$book['title'] ?>" value=""/>
                             </div>
 

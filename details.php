@@ -43,13 +43,13 @@ mysqli_close($db);
 <div class="container px-4">
     <div class="columns is-centered">
         <div class="column is-narrow">
-            <h2 class="title mt-4"><?= $book['title']?> details</h2>
+            <h2 class="title mt-4"><?= htmlentities($book['title'])?> details</h2>
             <section class="content">
                 <ul>
-                    <li>Author: <?= $book['author']?></li>
-                    <li>Genre: <?= $book['genre']?></li>
-                    <li>Pages: <?= $book['pages']?></li>
-                    <li>Year: <?= $book['year']?></li>
+                    <li>Author: <?= htmlentities($book['author'])?></li>
+                    <li>Genre: <?= htmlentities($book['genre'])?></li>
+                    <li>Pages: <?= htmlentities($book['pages'])?></li>
+                    <li>Year: <?= htmlentities($book['year'])?></li>
                 </ul>
             </section>
             <div>

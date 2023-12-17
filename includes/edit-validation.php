@@ -18,7 +18,8 @@ if(mysqli_num_rows($result) != 1) {
 $book = mysqli_fetch_assoc($result);
 
 $form_filled = false;
-    //Check if data is valid & generate error if not so
+    //if the data in post is empty fill it with the old data from the database
+    // this way the user will only have to fill in te input they want to change
     if (empty($title)) {
         $title = $book['title'];
     } if (empty($author)) {
