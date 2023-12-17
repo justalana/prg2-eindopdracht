@@ -98,11 +98,6 @@ mysqli_close($db);
                             <div class="control">
                                 <input class="input" id="author" type="text" name="author" placeholder="<?= $book['author']?>" value=""/>
                             </div>
-                            <?php if(isset($errors['author'])) { ?>
-                                <p class="help is-danger">
-                                    <?= $errors['author'] ?>
-                                </p>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -126,11 +121,6 @@ mysqli_close($db);
                                     <option value="Greek Mythology">Greek Mythology</option>
                                 </select>
                             </div>
-                            <?php if(isset($errors['genre'])) { ?>
-                                <p class="help is-danger">
-                                    <?= $errors['genre'] ?>
-                                </p>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -144,11 +134,6 @@ mysqli_close($db);
                             <div class="control">
                                 <input class="input" id="pages" type="number" name="pages" placeholder="<?= $book['pages']?>" value=""/>
                             </div>
-                            <?php if(isset($errors['pages'])) { ?>
-                                <p class="help is-danger">
-                                    <?= $errors['pages'] ?>
-                                </p>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -162,11 +147,6 @@ mysqli_close($db);
                             <div class="control">
                                 <input class="input" id="year" type="number" name="year" placeholder="<?= $book['year']?>" value=""/>
                             </div>
-                            <?php if(isset($errors['year'])) { ?>
-                                <p class="help is-danger">
-                                    <?= $errors['year'] ?>
-                                </p>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>

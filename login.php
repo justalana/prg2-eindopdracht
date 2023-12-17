@@ -160,6 +160,14 @@ if (isset($_POST['submit'])) {
                     </a>
                 </div>
             </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal"></div>
+                    <div class="field-body">
+                        <a href="index.php">
+                            <button class="button is-link is-fullwidth" type="submit" name="index">Back to index</button>
+                        </a>
+                    </div>
+                </div>
         <?php } ?>
 
         <?php } ?>

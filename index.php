@@ -1,6 +1,5 @@
 <?php
 //check if user is logged in
-$_SESSION['loggedin'] = false;
 session_start();
 $loggedin = $_SESSION['loggedin'];
 
