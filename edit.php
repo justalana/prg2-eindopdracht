@@ -1,57 +1,59 @@
 <?php
-//check if user is logged in
-//if user tries to enter this page while not logged in it sends them back to index
+//connection to database
+/** @var mysqli $db */
+require_once 'includes/database.php';
+
+//Step 1: Check if user is logged in
 require_once 'includes/secure.php';
 
-//Check if ID is valid
+//Step 2: Check if book ID is valid
 if (!isset($_GET['id']) || $_GET['id'] == '') {
+    //if not send back to index
     header(header: 'Location: index.php');
     exit;
 }
 $id = $_GET['id'];
 
-//connection to database
-/** @var mysqli $db */
-require_once 'includes/database.php';
-
-//get book from databse using query
+//Step 3: Get book data from database using query
 $query = 'SELECT * FROM book WHERE id ='.$id;
 $result = mysqli_query($db, $query)
 or die('Error '.mysqli_error($db).' with query '.$query);
 
-//check if book exists in database
+//Step 4: Check if book exists in database
 if(mysqli_num_rows($result) != 1) {
+    //if not send back to index
     header(header: 'Location: index.php');
     exit;
 }
 $book = mysqli_fetch_assoc($result);
 
+//Step 5: Fill in existing data from the book into the html form
 
-//check if form is submitted
+//Step 6: Check if form is submitted
 if(isset($_POST['submit'])) {
 
-    //if form is submitted get the variables from the post
+    //Step 7: If form is submitted get the variables from the post
     $title = mysqli_real_escape_string($db, $_POST['title']);
     $author = mysqli_real_escape_string($db, $_POST['author']);
     $genre = mysqli_real_escape_string($db, $_POST['genre']);
     $pages = mysqli_real_escape_string($db, $_POST['pages']);
     $year = mysqli_real_escape_string($db, $_POST['year']);
 
-    //check if the form was filled in correctly
+    //Step 8: Check if the form was filled in correctly
     // if values are empty fill in the old value
     // this way there will be no empty fields submitted
     require_once 'includes/edit-validation.php';
     /** @var mysqli $form_filled */
 
     if ($form_filled) {
-        //if form is filled correctly send info to database with query
+        //Step 9: If form is filled correctly send info to database with query
         $query = "UPDATE book 
                 SET `title`='$title',`author`='$author',`genre`='$genre',`pages`=$pages,`year`=$year   
                 WHERE id =" .$id;
         $result = mysqli_query($db, $query)
         or die('Error ' . mysqli_error($db) . ' with query ' . $query);
 
-        //send user back to index when done
+        //Step 10: Send user back to index when done
         header(header: 'Location: index.php');
         exit;
     }

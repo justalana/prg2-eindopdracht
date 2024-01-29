@@ -1,0 +1,21 @@
+Step 1: Check if user is logged in
+
+Step 2: Check if book ID is valid
+
+Step 3: Get book data from database using query
+
+Step 4: Check if book exists in database
+
+Step 5: Fill in existing data from the book into the html form
+
+Step 6: Check if form is submitted
+
+    Step 7: If form is submitted get the variables from the post
+
+    Step 8: Check if the form was filled in correctly
+    if values are empty fill in the old value
+    this way there will be no empty fields submitted
+
+        Step 9: If form is filled correctly send info to database with query
+
+        Step 10: Send user back to index when done

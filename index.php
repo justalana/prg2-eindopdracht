@@ -1,5 +1,5 @@
 <?php
-//check if user is logged in
+//Stap 1: Kjik of de user is ingelogd
 session_start();
 $loggedin = $_SESSION['loggedin'];
 
@@ -7,12 +7,12 @@ $loggedin = $_SESSION['loggedin'];
 /** @var mysqli $db */
 require_once 'includes/database.php';
 
-// Select all the albums from the database
+// Stap 2: Select alle data van de database
 $query = "SELECT * FROM book";
 $result = mysqli_query($db, $query)
 or die('Error '.mysqli_error($db).' with query '.$query);
 
-// Store the albums in an array
+// Stap 3: Zet alle data in een array
 $books = [];
 while($row = mysqli_fetch_assoc($result))
 {

@@ -3,7 +3,7 @@
 session_start();
 
 $_SESSION['loggedin'] = false;
-// Is user logged in?
+// Stap 1: Kijk of de user is ingelogd
 if($_SESSION['loggedin']){
     header("location: login.php");
     exit;
@@ -11,10 +11,10 @@ if($_SESSION['loggedin']){
 
 /** @var mysqli $db */
 require_once 'includes/database.php';
+
 $emailError = "";
 $passwordError = "";
 $details = [];
-
 if (isset($_POST['submit'])) {
 
     // Get form data
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
                     exit;
 
                 } else {
-                    // password doesnt match with email
+                    // error when password doesnt match with email
                     $errors['loginFailed'] = "Invalid password";
                 }
                 // Credentials not valid
